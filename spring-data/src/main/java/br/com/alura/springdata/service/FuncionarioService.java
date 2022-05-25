@@ -1,20 +1,23 @@
 package br.com.alura.springdata.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.alura.springdata.orm.Funcionario;
 import br.com.alura.springdata.repository.FuncionariRepository;
 
 @Service
-public class FumcionarioService {
+public class FuncionarioService {
 
+	@Autowired
 	private final FuncionariRepository funRepository;
 	private boolean system = true;
 	
-	public FumcionarioService(FuncionariRepository repository) {
+	public FuncionarioService(FuncionariRepository repository) {
 		this.funRepository = repository;
 	}
 	
@@ -55,7 +58,7 @@ public class FumcionarioService {
 		
 	}
 	
-	public void salvar(Scanner scanner) {
+	private void salvar(Scanner scanner) {
 		System.out.println("Digite o cargo");
 		String nome = scanner.next();
 		Funcionario funcionario = new Funcionario();
@@ -65,7 +68,7 @@ public class FumcionarioService {
 		System.out.println("Salvo");
 	}
 	
-	public void atualizar(Scanner scanner) {
+	private void atualizar(Scanner scanner) {
 		System.out.println("Digite id");
 		int id = scanner.nextInt();
 		System.out.println("Digite a descrição");
@@ -78,12 +81,13 @@ public class FumcionarioService {
 	    System.out.println("Atualizado");
 }
 
-	public void visualizar() {
-		funRepository.findAll().forEach(System.out::println);;
+	private void visualizar() {
+		Iterable<Funcionario> funcionario = funRepository.findAll();
+		funcionario.forEach(System.out::println);
 	}
 
 
-	public void deletar(Scanner scanner) {
+	private void deletar(Scanner scanner) {
 		System.out.println("Digite id");
 		int id = scanner.nextInt();
 		funRepository.deleteById(id);

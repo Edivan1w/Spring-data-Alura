@@ -8,17 +8,20 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import br.com.alura.springdata.orm.Cargo;
 import br.com.alura.springdata.repository.CargoRepository;
+import br.com.alura.springdata.repository.FuncionariRepository;
 import br.com.alura.springdata.service.CrudCargoService;
+import br.com.alura.springdata.service.FuncionarioService;
 
 @SpringBootApplication
 public class SpringDataApplication implements CommandLineRunner {
 	
 	private final CrudCargoService cargoService;
-	
+	private final FuncionarioService funcionarioService;
 	private boolean system = true;
 	
-	public SpringDataApplication(CrudCargoService repository) {
+	public SpringDataApplication(CrudCargoService repository, FuncionarioService funcionarioService) {
 		this.cargoService = repository;
+		this.funcionarioService = funcionarioService;
 	}
 
 	
@@ -35,11 +38,17 @@ public class SpringDataApplication implements CommandLineRunner {
 			System.out.println("Qual ação você quer exercer?");
 			System.out.println("0 - sair");
 			System.out.println("1 - Cargo");
+			System.out.println("2 - Funcionário");
 			
 			int action = scan.nextInt();
 			if(action == 1) {
 				cargoService.inicial(scan);
-			}else {
+			}
+			else if(action == 2){
+				funcionarioService.inicial(scan);
+			}
+			
+			else {
 				system = false;
 			}
 		}
