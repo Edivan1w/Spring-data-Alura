@@ -1,5 +1,6 @@
 package br.com.alura.springdata.orm;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,14 +15,22 @@ public class UnidadeDeTrabalho {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String descricao;
-	@OneToOne(fetch = FetchType.LAZY)
-	private Endeco endereco;
+	@Embedded
+	private Endereco endereco;
 	
+	@Override
+	public String toString() {
+		return "UnidadeDeTrabalho [id=" + id + ", descricao=" + descricao + ", endereco=" + endereco +"]";
+	}
+
 	public UnidadeDeTrabalho() {}
 
-	public UnidadeDeTrabalho(String descricao, Endeco endereco) {
+	public UnidadeDeTrabalho(String descricao,String cidade, String estatdo) {
 		this.descricao = descricao;
-		this.endereco = endereco;
+		Endereco endereco = new Endereco();
+		endereco.setCidade(cidade);
+		endereco.setEstado(estatdo);
+		this.setEndereco(endereco);
 	}
 
 	public Integer getId() {
@@ -40,11 +49,11 @@ public class UnidadeDeTrabalho {
 		this.descricao = descricao;
 	}
 
-	public Endeco getEndereco() {
+	public Endereco getEndereco() {
 		return endereco;
 	}
 
-	public void setEndereco(Endeco endereco) {
+	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
 	

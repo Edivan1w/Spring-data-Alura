@@ -11,17 +11,20 @@ import br.com.alura.springdata.repository.CargoRepository;
 import br.com.alura.springdata.repository.FuncionariRepository;
 import br.com.alura.springdata.service.CrudCargoService;
 import br.com.alura.springdata.service.FuncionarioService;
+import br.com.alura.springdata.service.UnidadeDeTrabalhoService;
 
 @SpringBootApplication
 public class SpringDataApplication implements CommandLineRunner {
 	
 	private final CrudCargoService cargoService;
 	private final FuncionarioService funcionarioService;
+	private final UnidadeDeTrabalhoService deTrabalhoService;
 	private boolean system = true;
 	
-	public SpringDataApplication(CrudCargoService repository, FuncionarioService funcionarioService) {
+	public SpringDataApplication(CrudCargoService repository, FuncionarioService funcionarioService, UnidadeDeTrabalhoService deTrabalhoService) {
 		this.cargoService = repository;
 		this.funcionarioService = funcionarioService;
+		this.deTrabalhoService = deTrabalhoService;
 	}
 
 	
@@ -39,6 +42,7 @@ public class SpringDataApplication implements CommandLineRunner {
 			System.out.println("0 - sair");
 			System.out.println("1 - Cargo");
 			System.out.println("2 - Funcionário");
+			System.out.println("3 - Unidade de trabalho");
 			
 			int action = scan.nextInt();
 			if(action == 1) {
@@ -46,6 +50,9 @@ public class SpringDataApplication implements CommandLineRunner {
 			}
 			else if(action == 2){
 				funcionarioService.inicial(scan);
+			}
+			else if(action == 3){
+				deTrabalhoService.inicial(scan);
 			}
 			
 			else {

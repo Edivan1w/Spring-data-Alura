@@ -32,7 +32,18 @@ public class UnidadeDeTrabalhoService {
 				break;
 			}
 			
-			
+			case 2: {
+				atualizar(scanner);
+				break;
+			}
+			case 3: {
+				visualizar();
+				break;
+			}
+			default :{
+				system = true;
+				break;
+			}
 			}
 		}
 	}
@@ -41,14 +52,45 @@ public class UnidadeDeTrabalhoService {
 		System.out.println("Digite a Empresa");
 		String nome = scanner.next();
 		
-		UnidadeDeTrabalho unidadeDeTrabalho = new UnidadeDeTrabalho();
-		unidadeDeTrabalho.setDescricao(nome);
+		System.out.println("Digite o Estado da Empresa");
+		System.out.println("Digite a cidade da Empresa");
+		String estado = scanner.next();
+		String cidade = scanner.next();
+		
+		UnidadeDeTrabalho unidadeDeTrabalho = new UnidadeDeTrabalho(nome, estado, cidade);
+	
 		repository.save(unidadeDeTrabalho);
 		System.out.println("Salvo");
 	}
 	
+	private void atualizar(Scanner scanner) {
+		System.out.println("Digite o id da Empresa");
+		int numero = scanner.nextInt();
+		UnidadeDeTrabalho unidadeDeTrabalho = repository.findById(numero).get();
+		
+		unidadeDeTrabalho.setId(numero);
+		
+		System.out.println("Digite a descrição da Empresa");
+		String descricao = scanner.next();
+		unidadeDeTrabalho.setDescricao(descricao);
+		
+		System.out.println("Digite o Estado da Empresa");
+		String estado = scanner.next();
+		unidadeDeTrabalho.getEndereco().setCidade(estado);
+		
+		System.out.println("Digite a cidade da Empresa");
+		String cidade = scanner.next();
+		unidadeDeTrabalho.getEndereco().setCidade(cidade);
+		
+		repository.save(unidadeDeTrabalho);
+		
+		System.out.println("Atualizado");
+		
+		
+	}
 	
-	
-	
+	private void visualizar() {
+		repository.findAll().forEach(System.out::println);
+	}
 	
 }
