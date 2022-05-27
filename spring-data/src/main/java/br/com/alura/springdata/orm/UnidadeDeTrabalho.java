@@ -1,12 +1,19 @@
 package br.com.alura.springdata.orm;
 
+
+
+import java.util.List;
+
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+
+
 
 @Entity
 public class UnidadeDeTrabalho {
@@ -15,12 +22,18 @@ public class UnidadeDeTrabalho {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String descricao;
-	@Embedded
-	private Endereco endereco;
+	private String endereco;
+
+
+	//	@Embedded
+//	private Endereco endereco;
+	@ManyToMany(mappedBy = "unidadeTrabalhos", fetch = FetchType.EAGER)
+    private List<Funcionario> funcionarios;
+	
 	
 	@Override
 	public String toString() {
-		return "UnidadeDeTrabalho [id=" + id + ", descricao=" + descricao + ", endereco=" + endereco +"]";
+		return "UnidadeDeTrabalho [id=" + id + ", descricao=" + descricao +"]";
 	}
 
 	public UnidadeDeTrabalho() {}
@@ -30,7 +43,7 @@ public class UnidadeDeTrabalho {
 		Endereco endereco = new Endereco();
 		endereco.setCidade(cidade);
 		endereco.setEstado(estatdo);
-		this.setEndereco(endereco);
+//		this.setEndereco(endereco);
 	}
 
 	public Integer getId() {
@@ -48,14 +61,29 @@ public class UnidadeDeTrabalho {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
-	public Endereco getEndereco() {
+	public String getEndereco() {
 		return endereco;
 	}
 
-	public void setEndereco(Endereco endereco) {
+	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
+
+	public List<Funcionario> getFuncionarios() {
+		return funcionarios;
+	}
+
+	public void setFuncionarios(List<Funcionario> funcionarios) {
+		this.funcionarios = funcionarios;
+	}
+
+//	public Endereco getEndereco() {
+//		return endereco;
+//	}
+//
+//	public void setEndereco(Endereco endereco) {
+//		this.endereco = endereco;
+//	}
 	
 	
 	

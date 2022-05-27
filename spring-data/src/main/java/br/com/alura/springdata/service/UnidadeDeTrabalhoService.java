@@ -40,8 +40,12 @@ public class UnidadeDeTrabalhoService {
 				visualizar();
 				break;
 			}
+			case 4:{
+				deletar(scanner);
+				break;
+			}
 			default :{
-				system = true;
+				system = false;
 				break;
 			}
 			}
@@ -65,22 +69,26 @@ public class UnidadeDeTrabalhoService {
 	
 	private void atualizar(Scanner scanner) {
 		System.out.println("Digite o id da Empresa");
-		int numero = scanner.nextInt();
-		UnidadeDeTrabalho unidadeDeTrabalho = repository.findById(numero).get();
-		
-		unidadeDeTrabalho.setId(numero);
+		int id = scanner.nextInt();
+		UnidadeDeTrabalho unidadeDeTrabalho = repository.findById(id).get();
+		unidadeDeTrabalho.setId(id);
 		
 		System.out.println("Digite a descrição da Empresa");
 		String descricao = scanner.next();
 		unidadeDeTrabalho.setDescricao(descricao);
 		
-		System.out.println("Digite o Estado da Empresa");
-		String estado = scanner.next();
-		unidadeDeTrabalho.getEndereco().setCidade(estado);
+		System.out.println("Digite o endereço da Empresa");
+		String endereco = scanner.next();
+		unidadeDeTrabalho.setEndereco(endereco);
 		
-		System.out.println("Digite a cidade da Empresa");
-		String cidade = scanner.next();
-		unidadeDeTrabalho.getEndereco().setCidade(cidade);
+		
+//		System.out.println("Digite o Estado da Empresa");
+//		String estado = scanner.next();
+//		unidadeDeTrabalho.getEndereco().setCidade(estado);
+//		
+//		System.out.println("Digite a cidade da Empresa");
+//		String cidade = scanner.next();
+//		unidadeDeTrabalho.getEndereco().setCidade(cidade);
 		
 		repository.save(unidadeDeTrabalho);
 		
@@ -91,6 +99,13 @@ public class UnidadeDeTrabalhoService {
 	
 	private void visualizar() {
 		repository.findAll().forEach(System.out::println);
+	}
+	
+	private void deletar(Scanner scanner) {
+		System.out.println("Digite o id da Empresa");
+		int id = scanner.nextInt();
+		repository.deleteById(id);
+		System.out.println("Deletado");
 	}
 	
 }
