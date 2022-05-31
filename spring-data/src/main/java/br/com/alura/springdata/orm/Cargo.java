@@ -1,5 +1,6 @@
 package br.com.alura.springdata.orm;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -18,8 +19,9 @@ public class Cargo {
 	private Integer id;
 	private String nome;
 	@OneToMany(mappedBy = "cargo")
-	private List<Funcionario> funcionario;
+	private List<Funcionario> funcionario = new ArrayList<>();
 
+	public Cargo() {}
 	
 	public Integer getId() {
 		return id;

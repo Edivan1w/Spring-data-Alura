@@ -29,7 +29,7 @@ public class Funcionario {
 	private BigDecimal salario;
 	private LocalDate dataContratação;
 	@ManyToOne
-	@JoinColumn(name = "cargo_id", nullable = false)
+	@JoinColumn(name = "cargo_id")
 	private Cargo cargo;
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "funcionarios_unidades", joinColumns = {
@@ -37,6 +37,7 @@ public class Funcionario {
 	inverseJoinColumns = { @JoinColumn(name = "fk_unidade") })
 	private List<UnidadeDeTrabalho> unidadeTrabalhos;
 	
+	public Funcionario() {}
 	
 	public String getCpf() {
 		return cpf;
@@ -61,6 +62,7 @@ public class Funcionario {
 	}
 	public void setCargo(Cargo cargo) {
 		this.cargo = cargo;
+		
 	}
 	public Integer getId() {
 		return id;
@@ -83,7 +85,7 @@ public class Funcionario {
 	}
 @Override
 public String toString() {
-	return "Cargo: " + this.nome + "-- ID: " + this.id;
+	return "Cargo: " + this.cargo.getNome() + this.nome + "-- ID: " + this.id;
 }
 
 }

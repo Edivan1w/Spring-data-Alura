@@ -7,18 +7,22 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.alura.springdata.orm.Cargo;
 import br.com.alura.springdata.orm.Funcionario;
+import br.com.alura.springdata.repository.CargoRepository;
 import br.com.alura.springdata.repository.FuncionariRepository;
 
 @Service
 public class FuncionarioService {
 
-	@Autowired
+	
 	private final FuncionariRepository funRepository;
+	private final CargoRepository cargoRepository;
 	private boolean system = true;
 	
-	public FuncionarioService(FuncionariRepository repository) {
+	public FuncionarioService(FuncionariRepository repository, CargoRepository cargoRepository) {
 		this.funRepository = repository;
+		this.cargoRepository = cargoRepository;
 	}
 	
 	public void inicial(Scanner scanner) {
@@ -33,22 +37,22 @@ public class FuncionarioService {
 			int action = scanner.nextInt();
 			switch(action) {
 			
-			case 1: {
+			case 1: 
 				salvar(scanner);
 				break;
-			}
-			case 2: {
+			
+			case 2: 
 				atualizar(scanner);
 				break;
-			}
-			case 3: {
+			
+			case 3: 
 				visualizar();
 				break;
-			}
-			case 4:  {
+			
+			case 4:  
 				deletar(scanner);
 				break;
-			}
+			
 			default:
 				system = false;
 				break;
@@ -59,11 +63,15 @@ public class FuncionarioService {
 	}
 	
 	private void salvar(Scanner scanner) {
-		System.out.println("Digite o cargo");
+		System.out.println("Digite o NOME");
 		String nome = scanner.next();
 		Funcionario funcionario = new Funcionario();
 		funcionario.setNome(nome);
-		
+		System.out.println(funcionario);
+		System.out.println("Digite o id do cargo");
+		int id = scanner.nextInt();
+		Cargo cargo2 = cargoRepository.findById(id).get();
+		funcionario.setCargo(cargo2);
 		funRepository.save(funcionario);
 		System.out.println("Salvo");
 	}

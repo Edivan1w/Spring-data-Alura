@@ -24,11 +24,13 @@ public class UnidadeDeTrabalho {
 	private String descricao;
 	private String endereco;
 
+	
 
 	//	@Embedded
 //	private Endereco endereco;
 	@ManyToMany(mappedBy = "unidadeTrabalhos", fetch = FetchType.EAGER)
     private List<Funcionario> funcionarios;
+	
 	
 	
 	@Override
