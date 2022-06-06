@@ -44,7 +44,7 @@ public class Cargo {
 	}
 @Override
 public String toString() {
-	return "Cargo: " + this.nome + "-- ID: " + this.id;
+	return "Cargo: " + "-- ID: " + this.id;
 }
 
 }

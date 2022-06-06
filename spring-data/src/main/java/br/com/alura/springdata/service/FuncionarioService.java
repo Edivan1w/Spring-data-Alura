@@ -1,5 +1,6 @@
 package br.com.alura.springdata.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -9,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import br.com.alura.springdata.orm.Cargo;
 import br.com.alura.springdata.orm.Funcionario;
+import br.com.alura.springdata.orm.UnidadeDeTrabalho;
 import br.com.alura.springdata.repository.CargoRepository;
 import br.com.alura.springdata.repository.FuncionariRepository;
+import br.com.alura.springdata.repository.UnidadeDeTrabalhoRepository;
 
 @Service
 public class FuncionarioService {
@@ -18,11 +21,13 @@ public class FuncionarioService {
 	
 	private final FuncionariRepository funRepository;
 	private final CargoRepository cargoRepository;
+	private final UnidadeDeTrabalhoRepository utRepository;
 	private boolean system = true;
 	
-	public FuncionarioService(FuncionariRepository repository, CargoRepository cargoRepository) {
+	public FuncionarioService(FuncionariRepository repository, CargoRepository cargoRepository, UnidadeDeTrabalhoRepository utRepository) {
 		this.funRepository = repository;
 		this.cargoRepository = cargoRepository;
+		this.utRepository = utRepository;
 	}
 	
 	public void inicial(Scanner scanner) {
@@ -65,12 +70,25 @@ public class FuncionarioService {
 	private void salvar(Scanner scanner) {
 		System.out.println("Digite o NOME");
 		String nome = scanner.next();
+		System.out.println("Digite o cpf");
+		String cpf = scanner.next();
+		System.out.println("Digite o salario");
+		BigDecimal salario = scanner.nextBigDecimal();
+		
 		Funcionario funcionario = new Funcionario();
 		funcionario.setNome(nome);
+		funcionario.setCpf(cpf);
+		funcionario.setSalario(salario);
 		System.out.println(funcionario);
+		
+		System.out.println("Digite o id da Unidade de trabalho");
+		int idU = scanner.nextInt();
+		
 		System.out.println("Digite o id do cargo");
 		int id = scanner.nextInt();
+		UnidadeDeTrabalho unidadeDeTrabalho = utRepository.findById(idU).get();
 		Cargo cargo2 = cargoRepository.findById(id).get();
+		funcionario.getUnidadeTrabalhos().add(unidadeDeTrabalho);
 		funcionario.setCargo(cargo2);
 		funRepository.save(funcionario);
 		System.out.println("Salvo");

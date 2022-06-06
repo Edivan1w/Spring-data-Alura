@@ -27,7 +27,7 @@ public class Funcionario {
 	private String nome;
 	private String cpf;
 	private BigDecimal salario;
-	private LocalDate dataContratação;
+	private LocalDate dataContratação = LocalDate.now();
 	@ManyToOne
 	@JoinColumn(name = "cargo_id")
 	private Cargo cargo;
@@ -85,7 +85,7 @@ public class Funcionario {
 	}
 @Override
 public String toString() {
-	return "Cargo: " + this.cargo.getNome() + this.nome + "-- ID: " + this.id;
+	return "Nome: " + this.nome + "-- ID: " + this.id;
 }
 
 }
