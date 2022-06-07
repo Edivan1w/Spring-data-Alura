@@ -6,6 +6,10 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import br.com.alura.springdata.orm.Cargo;
@@ -51,7 +55,7 @@ public class FuncionarioService {
 				break;
 			
 			case 3: 
-				visualizar();
+				visualizar(scanner);
 				break;
 			
 			case 4:  
@@ -68,6 +72,7 @@ public class FuncionarioService {
 	}
 	
 	private void salvar(Scanner scanner) {
+		Funcionario funcionario = new Funcionario();
 		System.out.println("Digite o NOME");
 		String nome = scanner.next();
 		System.out.println("Digite o cpf");
@@ -75,10 +80,10 @@ public class FuncionarioService {
 		System.out.println("Digite o salario");
 		BigDecimal salario = scanner.nextBigDecimal();
 		
-		Funcionario funcionario = new Funcionario();
 		funcionario.setNome(nome);
 		funcionario.setCpf(cpf);
 		funcionario.setSalario(salario);
+		System.out.println("-----");
 		System.out.println(funcionario);
 		
 		System.out.println("Digite o id da Unidade de trabalho");
@@ -107,9 +112,16 @@ public class FuncionarioService {
 	    System.out.println("Atualizado");
 }
 
-	private void visualizar() {
-		Iterable<Funcionario> funcionario = funRepository.findAll();
-		funcionario.forEach(System.out::println);
+	private void visualizar(Scanner scanner) {
+		System.out.println("Digite a página que deseja visualizar");
+		Integer pag = scanner.nextInt();
+		Pageable pageable = PageRequest.of(pag, 3, Sort.by(Sort.Direction.ASC, "nome"));
+		Page<Funcionario> funcionarios = funRepository.findAll(pageable);
+		
+		System.out.println("Pagina atual => " + funcionarios.getNumber());
+		System.out.println("Total elemento => " +funcionarios.getTotalElements());
+		
+		funcionarios.forEach(func -> System.out.println(func));
 	}
 
 

@@ -2,8 +2,10 @@ package br.com.alura.springdata.orm;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -35,7 +37,7 @@ public class Funcionario {
 	@JoinTable(name = "funcionarios_unidades", joinColumns = {
 			@JoinColumn(name = "fk_funcionario") }, 
 	inverseJoinColumns = { @JoinColumn(name = "fk_unidade") })
-	private List<UnidadeDeTrabalho> unidadeTrabalhos;
+	private List<UnidadeDeTrabalho> unidadeTrabalhos = new ArrayList<>();
 	
 	public Funcionario() {}
 	

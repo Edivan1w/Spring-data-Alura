@@ -2,6 +2,7 @@ package br.com.alura.springdata.orm;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Embedded;
@@ -29,7 +30,7 @@ public class UnidadeDeTrabalho {
 	//	@Embedded
 //	private Endereco endereco;
 	@ManyToMany(mappedBy = "unidadeTrabalhos", fetch = FetchType.EAGER)
-    private List<Funcionario> funcionarios;
+    private List<Funcionario> funcionarios = new ArrayList<>();
 	
 	
 	
