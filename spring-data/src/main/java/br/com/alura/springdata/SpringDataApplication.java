@@ -12,6 +12,7 @@ import br.com.alura.springdata.repository.CargoRepository;
 import br.com.alura.springdata.repository.FuncionariRepository;
 import br.com.alura.springdata.service.CrudCargoService;
 import br.com.alura.springdata.service.FuncionarioService;
+import br.com.alura.springdata.service.RelatorioDinamicoFuncionario;
 import br.com.alura.springdata.service.RelatoriosService;
 import br.com.alura.springdata.service.UnidadeDeTrabalhoService;
 
@@ -23,14 +24,16 @@ public class SpringDataApplication implements CommandLineRunner {
 	private final FuncionarioService funcionarioService;
 	private final UnidadeDeTrabalhoService deTrabalhoService;
 	private final RelatoriosService relatoriosService;
+	private final RelatorioDinamicoFuncionario dinamicoFuncionario;
 	private boolean system = true;
 	
 	public SpringDataApplication(CrudCargoService repository, FuncionarioService funcionarioService, 
-			UnidadeDeTrabalhoService deTrabalhoService, RelatoriosService relatoriosService) {
+			UnidadeDeTrabalhoService deTrabalhoService, RelatoriosService relatoriosService, RelatorioDinamicoFuncionario dinamicoFuncionario) {
 		this.cargoService = repository;
 		this.funcionarioService = funcionarioService;
 		this.deTrabalhoService = deTrabalhoService;
 		this.relatoriosService = relatoriosService;
+		this.dinamicoFuncionario = dinamicoFuncionario;
 	}
 
 	
@@ -50,6 +53,8 @@ public class SpringDataApplication implements CommandLineRunner {
 			System.out.println("2 - Funcionário");
 			System.out.println("3 - Unidade de trabalho");
 			System.out.println("4 - Relatórios");
+			System.out.println("5 - Relatórios dinâmicos");
+			
 			int action = scan.nextInt();
 			if(action == 1) {
 				cargoService.inicial(scan);
@@ -62,6 +67,10 @@ public class SpringDataApplication implements CommandLineRunner {
 			}
 			else if(action == 4) {
 				relatoriosService.inicial(scan);
+			}
+			else if(action == 5){
+				dinamicoFuncionario.consultaDinamica(scan);
+				break;
 			}
 			
 			else {

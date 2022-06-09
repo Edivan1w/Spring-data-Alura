@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.alura.springdata.orm.Cargo;
 import br.com.alura.springdata.orm.Funcionario;
+import br.com.alura.springdata.orm.FuncionarioProjecao;
 import br.com.alura.springdata.orm.UnidadeDeTrabalho;
 import br.com.alura.springdata.repository.CargoRepository;
 import br.com.alura.springdata.repository.FuncionariRepository;
@@ -42,6 +43,8 @@ public class FuncionarioService {
 			System.out.println("2 = atualizar");
 			System.out.println("3 = visualizar");
 			System.out.println("4 = deletar");
+			System.out.println("5 = visualizar funcionários com id, nome e sálário.");
+		
 			
 			int action = scanner.nextInt();
 			switch(action) {
@@ -61,6 +64,12 @@ public class FuncionarioService {
 			case 4:  
 				deletar(scanner);
 				break;
+				
+			case 5: 
+				visualizarSalioFuncionários();
+				break;
+		
+				
 			
 			default:
 				system = false;
@@ -111,6 +120,13 @@ public class FuncionarioService {
 	    funRepository.save(funcionario);
 	    System.out.println("Atualizado");
 }
+	
+	private void visualizarSalioFuncionários() {
+		List<FuncionarioProjecao> list= funRepository.findFuncionarioSalario();
+		list.forEach(f -> {
+			System.out.println("id: " + f.getId() + " | " + "Nome : " + f.getNome() + " | " + " salário: " + f.getSalario());
+		});
+	}
 
 	private void visualizar(Scanner scanner) {
 		System.out.println("Digite a página que deseja visualizar");
@@ -121,7 +137,7 @@ public class FuncionarioService {
 		System.out.println("Pagina atual => " + funcionarios.getNumber());
 		System.out.println("Total elemento => " +funcionarios.getTotalElements());
 		
-		funcionarios.forEach(func -> System.out.println(func));
+		funcionarios.forEach(func -> System.out.println(func.getNome() + func.getCargo()));
 	}
 
 
